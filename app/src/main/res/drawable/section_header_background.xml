@@ -1,0 +1,10 @@
+<!-- section_header_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:startColor="#C68EFD"
+        android:endColor="#D254FF"
+        android:angle="90" />
+    <corners
+        android:topLeftRadius="12dp"
+        android:topRightRadius="12dp" />
+</shape>
