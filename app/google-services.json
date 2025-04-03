@@ -1,26 +1,37 @@
 {
   "project_info": {
-    "project_number": "21410917206",
-    "project_id": "mealmate-d183a",
-    "storage_bucket": "mealmate-d183a.firebasestorage.app"
+    "project_number": "499818479831",
+    "firebase_url": "https://mealmate-e7b31-default-rtdb.firebaseio.com",
+    "project_id": "mealmate-e7b31",
+    "storage_bucket": "mealmate-e7b31.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:21410917206:android:57b8f40590fb75dc7284f7",
+        "mobilesdk_app_id": "1:499818479831:android:555b0e4d7480dbfcc7f092",
         "android_client_info": {
           "package_name": "com.example.mealmate"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "499818479831-ns2mscefqi9kotsbpon3uc1f8qrqcnm1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyATHJW1WZM3l1X3uvdaCfcmoYTvZvnDqtA"
+          "current_key": "AIzaSyDeHeFqv1SKD1j0H1jUZpWOWE6x7uI9w0o"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499818479831-ns2mscefqi9kotsbpon3uc1f8qrqcnm1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
