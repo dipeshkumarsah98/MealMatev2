@@ -3,6 +3,7 @@ package com.example.mealmate.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.example.mealmate.ui.home.fragments.DayMealFragment
 
 class MealPlanPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     private val days = arrayOf("Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")

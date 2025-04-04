@@ -1,170 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#F9F9F9"
-    tools:context=".ui.home.RecipeDetailUpdateActivity">
+    android:theme="@style/Theme.MaterialComponents"
+    tools:context=".ui.home.UpdateRecipeActivity">
 
-    <!-- Top Bar -->
-    <LinearLayout
+    <!-- Collapsing Toolbar with Image -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/gradient_header"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="16dp">
+        android:layout_height="250dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <ImageView
-            android:id="@+id/urBack"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:padding="4dp"
-            android:src="@drawable/baseline_arrow_back_ios_24"
-            app:tint="@color/white" />
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@drawable/gradient_header"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="Update Recipe">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Update Recipe"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            <!-- Recipe Image Background -->
+            <ImageView
+                android:id="@+id/imageUpdateRecipe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logo"
+                app:layout_collapseMode="parallax" />
 
-    <ScrollView
+            <!-- Gradient Overlay -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_header"
+                android:alpha="0.6"/>
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin">
+
+                <ImageView
+                    android:id="@+id/urBack"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:padding="4dp"
+                    android:src="@drawable/baseline_arrow_back_ios_24"
+                    app:tint="@color/white" />
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Main Content -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
-            <!-- Recipe Image -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_marginVertical="40dp"
-                app:cardCornerRadius="60dp"
-                app:cardElevation="3dp">
-
-                <ImageView
-                    android:id="@+id/imageUpdateRecipe"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/logo" />
-            </androidx.cardview.widget.CardView>
-
-            <!-- Recipe Name -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recipe Name"
-                android:textColor="#666666"
-                android:textSize="16sp"
-                android:layout_marginBottom="5dp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/etRecipeName"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/custom_input"
-                android:hint="Recipe Name"
-                android:padding="12dp"
-                android:textColor="@color/black"
-                android:textColorHint="#888888"
-                android:layout_marginBottom="16dp" />
-
-            <!-- Category -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Category"
-                android:textColor="#666666"
-                android:textSize="16sp"
-                android:layout_marginBottom="5dp"
-                android:textStyle="bold" />
-
+            <!-- Content Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="1dp"
-                android:layout_marginBottom="16dp">
-
-                <Spinner
-                    android:id="@+id/spinnerCategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:theme="@style/AppTheme"
-                    android:paddingHorizontal="12dp" />
-            </androidx.cardview.widget.CardView>
-
-            <!-- Serving -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Serving Size"
-                android:textColor="#666666"
-                android:textSize="16sp"
-                android:layout_marginBottom="5dp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/etServing"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:padding="12dp"
-                android:background="@drawable/custom_input"
-                android:hint="Number of servings"
-                android:inputType="number"
-                android:textColor="@color/black"
-                android:textColorHint="#888888"
-                android:layout_marginBottom="16dp" />
-
-            <!-- Ingredients Section -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="2dp">
+                android:layout_margin="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#F2EFE7"
+                    android:padding="24dp">
+
+                    <!-- Recipe Name -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:hint="Recipe Name"
+                        app:hintTextColor="@color/black"
+                        app:boxStrokeColor="#C68EFD"
+                        android:textColorHint="@color/black"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etRecipeName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Category"
+                        android:textSize="16sp"
+                        android:textColor="#666666"
+                        android:layout_marginBottom="8dp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="8dp"
+                        android:background="@color/white"
+                        android:backgroundTint="#F2EFE7"
+                        app:cardElevation="2dp"
+                        android:layout_marginBottom="16dp">
+
+                        <Spinner
+                            android:id="@+id/spinnerCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:paddingHorizontal="12dp" />
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Serving -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:hintTextColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:hint="Serving Size"
+                        app:boxStrokeColor="#C68EFD"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etServing"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:textColor="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F2EFE7"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/section_header_background"
-                        android:gravity="center_vertical"
-                        android:paddingStart="16dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gradient_header"
+
+                        android:padding="16dp"
                         android:text="Ingredients"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/etIngredients"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:hint="Enter ingredients (comma separated)"
-                        android:minHeight="120dp"
                         android:padding="16dp"
-                        android:textColor="@color/black"
-                        android:textColorHint="#888888"
-                        android:background="@color/white" />
+                        app:hintTextColor="@color/black"
+                        android:textColorHint="@color/black"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etIngredients"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top"
+                            android:hint="Enter ingredients (comma separated)"
+                            app:hintTextColor="@color/black"
+                            android:textColorHint="@color/black"
+                            android:inputType="textMultiLine"
+                            android:minHeight="120dp"
+                            android:textColor="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -172,52 +198,62 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="2dp">
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#F2EFE7"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/section_header_background"
-                        android:gravity="center_vertical"
-                        android:paddingStart="16dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gradient_header"
+                        android:padding="16dp"
                         android:text="Instructions"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/etInstructions"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:hint="Enter cooking instructions"
-                        android:minHeight="150dp"
+                        app:hintTextColor="@color/black"
+                        android:textColorHint="@color/black"
                         android:padding="16dp"
-                        android:textColor="@color/black"
-                        android:textColorHint="#888888"
-                        android:background="@color/white" />
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etInstructions"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top"
+                            android:hint="Enter cooking instructions"
+                            android:inputType="textMultiLine"
+                            android:minHeight="150dp"
+                            android:textColor="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <!-- Update Button -->
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnUpdateRecipe"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/gradient_header"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="#48A6A7"
                 android:text="UPDATE RECIPE"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:cornerRadius="12dp"
+                app:elevation="4dp" />
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

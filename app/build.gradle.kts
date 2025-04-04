@@ -89,5 +89,8 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("it.xabaras.android:recyclerview-swipedecorator:1.4")
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.3.0")
+
 
 }

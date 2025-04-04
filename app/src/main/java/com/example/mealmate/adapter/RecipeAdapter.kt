@@ -16,7 +16,9 @@ import com.example.mealmate.ui.home.UpdateRecipeActivity
 import com.example.mealmate.utils.ImageUtils
 import com.example.mealmate.viewmodel.RecipeViewModel
 
-class RecipeAdapter(private var recipes: List<Recipe>, private val viewModel: RecipeViewModel) :
+class RecipeAdapter(private var recipes: List<Recipe>, private val viewModel: RecipeViewModel,
+    private val context: Context
+    ) :
     RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -33,10 +35,37 @@ class RecipeAdapter(private var recipes: List<Recipe>, private val viewModel: Re
         return RecipeViewHolder(view)
     }
 
+    fun deleteItem(position: Int) {
+        val recipe = recipes[position]
+        recipes = recipes.filterIndexed { index, _ -> index != position }
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, recipes.size)
+        viewModel.deleteRecipe(recipe.id)
+    }
+
+    fun editItem(position: Int) {
+        val recipe = recipes[position]
+        val intent = Intent(context, UpdateRecipeActivity::class.java)
+        intent.putExtra("recipeId", recipe.id)
+        context.startActivity(intent);
+    }
+
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = recipes[position]
         holder.tvRecipeName.text = recipe.name
         holder.tvRecipeCategory.text = "Category: ${recipe.category}"
+
+        fun deleteRecipe() {
+            val context = holder.itemView.context
+            android.app.AlertDialog.Builder(context)
+                .setTitle("Delete Recipe")
+                .setMessage("Are you sure you want to delete ${recipe.name}'s recipe?")
+                .setPositiveButton("Yes") { _, _ ->
+                    viewModel.deleteRecipe(recipe.id)
+                }
+                .setNegativeButton("No", null)
+                .show()
+        }
 
         if (recipe.image.isNotEmpty()) {
             val bitmap = ImageUtils.decodeBase64ToImage(recipe.image)
@@ -56,16 +85,9 @@ class RecipeAdapter(private var recipes: List<Recipe>, private val viewModel: Re
         }
 
         holder.btnDelete.setOnClickListener {
-            val context = holder.itemView.context
-            android.app.AlertDialog.Builder(context)
-                .setTitle("Delete Recipe")
-                .setMessage("Are you sure you want to delete ${recipe.name}'s recipe?")
-                .setPositiveButton("Yes") { _, _ ->
-                    viewModel.deleteRecipe(recipe.id)
-                }
-                .setNegativeButton("No", null)
-                .show()
+            deleteRecipe();
         }
+
     }
 
     override fun getItemCount(): Int = recipes.size
