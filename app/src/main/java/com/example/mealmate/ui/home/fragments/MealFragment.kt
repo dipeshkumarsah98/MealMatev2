@@ -2,6 +2,7 @@ package com.example.mealmate.ui.home.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,13 @@ import android.widget.ProgressBar
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealmate.R
 import com.example.mealmate.adapter.RecipeAdapter
 import com.example.mealmate.ui.home.AddRecipeActivity
+import com.example.mealmate.utils.SwipeGesture
 import com.example.mealmate.viewmodel.RecipeViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -39,7 +42,25 @@ class MealFragment : BaseFragment() {
         progressBar = rootView.findViewById(R.id.progressBar)
 
 
-        recipeAdapter = RecipeAdapter(emptyList(), recipeViewModel)
+        recipeAdapter = RecipeAdapter(emptyList(), recipeViewModel, requireContext())
+        val swipeGesture = object : SwipeGesture(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.bindingAdapterPosition
+                when (direction) {
+                    ItemTouchHelper.LEFT -> {
+                        recipeAdapter.deleteItem(position);
+                    }
+
+                    ItemTouchHelper.RIGHT -> {
+                        recipeAdapter.editItem(position);
+                    }
+
+                    else -> {
+                        Log.i("MealFragment", "Invalid swipe")
+                    }
+                }
+            }
+        }
         recyclerView.adapter = recipeAdapter
 
         progressBar.visibility = View.VISIBLE
@@ -57,6 +78,8 @@ class MealFragment : BaseFragment() {
         }
 
         recipeViewModel.loadRecipes()
+        val itemTouchHelper = ItemTouchHelper(swipeGesture)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
 
         setupSearch()
 

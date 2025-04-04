@@ -16,7 +16,7 @@ import com.example.mealmate.ui.home.UpdateRecipeActivity
 import com.example.mealmate.utils.ImageUtils
 import com.example.mealmate.viewmodel.RecipeViewModel
 
-class RecipeAdapter(private var recipes: List<Recipe>, private val viewModel: RecipeViewModel) :
+class RecipeAdapter(private var recipes: List<Recipe>, private val viewModel: RecipeViewModel, private val context: Context) :
     RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -26,6 +26,21 @@ class RecipeAdapter(private var recipes: List<Recipe>, private val viewModel: Re
         val btnDelete: ImageView = view.findViewById(R.id.rDelete)
         val recipeImage: ImageView = view.findViewById(R.id.recipeImage)
 
+    }
+
+    fun deleteItem(position: Int) {
+        val recipe = recipes[position]
+        recipes = recipes.filterIndexed { index, _ -> index != position }
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, recipes.size)
+        viewModel.deleteRecipe(recipe.id)
+    }
+
+    fun editItem(position: Int) {
+        val recipe = recipes[position]
+        val intent = Intent(context, UpdateRecipeActivity::class.java)
+        intent.putExtra("recipeId", recipe.id)
+        context.startActivity(intent);
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
