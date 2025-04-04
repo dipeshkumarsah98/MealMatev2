@@ -1,12 +1,15 @@
 package com.example.mealmate.ui.home.fragments
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.telephony.SmsManager
 import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +20,8 @@ import com.example.mealmate.model.GroceryItem
 import com.example.mealmate.utils.SwipeGesture
 import com.example.mealmate.viewmodel.GroceryViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import android.Manifest
 
 class GroceryFragment : BaseFragment() {
     private val viewModel: GroceryViewModel by viewModels()
@@ -140,18 +145,62 @@ class GroceryFragment : BaseFragment() {
         dialog.show()
     }
 
+    private fun showSnackbar(message: String) {
+        view?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show()
+        }
+    }
+    private fun checkSmsPermissionAndSend(): Boolean {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.SEND_SMS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            showSnackbar("Permission not granted. Requesting permission...")
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.SEND_SMS),
+                1
+            )
+            return false
+        } else {
+            return true
+        }
+    }
+
     private fun sendGroceryList() {
+
         if (groceryItems.isEmpty()) {
             Toast.makeText(requireContext(), "Grocery list is empty!", Toast.LENGTH_SHORT).show()
             return
         }
-
         val groceryText = groceryItems.joinToString("\n") { "${it.name}: ${it.quantity}" }
-        val smsIntent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("sms:")
-            putExtra("sms_body", "Grocery List:\n$groceryText")
-        }
+        val dialogView = layoutInflater.inflate(R.layout.dialog_enter_number, null)
+        val etNumber = dialogView.findViewById<EditText>(R.id.etPhoneNumber)
 
-        startActivity(smsIntent)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Enter Contact: ")
+            .setView(dialogView)
+            .setPositiveButton("Send") { _, _ ->
+                val number = etNumber.text.toString().trim()
+                val isvalid = checkSmsPermissionAndSend();
+                val smsManager = SmsManager.getDefault()
+                if(isvalid){
+                    smsManager.sendTextMessage(number, null, "Grocery List:\n$groceryText", null, null)
+                    showSnackbar("SMS Sent Successfully")
+
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .create()
+
+    dialog.show()
+//        val smsIntent = Intent(Intent.ACTION_VIEW).apply {
+//            data = Uri.parse("sms:")
+//            val smsManager = SmsManager.getDefault()
+//            putExtra("sms_body", "Grocery List:\n$groceryText")
+//        }
+
+//        startActivity(smsIntent)
     }
 }
