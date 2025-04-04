@@ -31,6 +31,11 @@ class RegistrationActivity: AppCompatActivity() {
         val factory = AuthViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
 
+        binding.signupLoginButton.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+
 
         binding.signupRegButton.setOnClickListener {
             val name = binding.nameRegField.text.toString().trim()

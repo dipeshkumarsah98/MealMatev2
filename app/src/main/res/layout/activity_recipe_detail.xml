@@ -6,7 +6,15 @@
     android:layout_height="match_parent"
     android:background="#F9F9F9"
     tools:context=".ui.home.RecipeDetailActivity">
-
+    <!-- Back Button (Left Side) -->
+    <ImageView
+        android:id="@+id/dpBack"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:padding="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/baseline_arrow_back_ios_24"
+        app:tint="@color/white" />
     <!-- Collapsing App Bar with Image -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -74,7 +82,7 @@
                     android:text="Category: Breakfast"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:background="F2EFE7"
+                    android:background="#F2EFE7"
                     android:padding="8dp"
                     android:gravity="center"
                     android:fontFamily="sans-serif-medium" />
